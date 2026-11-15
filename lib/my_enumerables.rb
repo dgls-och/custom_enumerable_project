@@ -60,6 +60,17 @@ module Enumerable
 
     true
   end
+
+  def my_count
+    return self.size unless block_given?
+
+    counter = 0
+    self.size.times do |index|
+      counter += 1 if yield(self[index])
+    end
+    
+    counter
+  end
 end
 
 class Array
