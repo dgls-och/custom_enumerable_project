@@ -32,7 +32,7 @@ module Enumerable
   end
 
   def my_all?
-    return to_enum(:my_all) unless block_given?
+    return true unless block_given?
 
     (self.length - 1).times do |index|
       return false unless yield(self[index])
