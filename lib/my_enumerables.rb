@@ -50,6 +50,16 @@ module Enumerable
 
     false
   end
+
+  def my_none?
+    return self.empty? ? true : false unless block_given?
+
+    (self.length - 1).times do |index|
+      return false if yield(self[index])
+    end
+
+    true
+  end
 end
 
 class Array
