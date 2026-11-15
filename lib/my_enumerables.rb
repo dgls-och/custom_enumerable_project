@@ -4,7 +4,7 @@ module Enumerable
 
     self.size.times do |index|
       yield(self[index]) unless self.is_a?(Hash)
-      yield(index, self[index]) if self.is_a?(Hash)
+      #yield(index, self[index]) if self.is_a?(Hash)
     end
 
     self
@@ -70,6 +70,17 @@ module Enumerable
     end
     
     counter
+  end
+
+  def my_map
+    return to_enum(:my_map) unless block_given?
+
+    mapped = []
+    self.size.times do |index|
+      mapped << yield(self[index])
+    end
+
+    mapped
   end
 end
 
