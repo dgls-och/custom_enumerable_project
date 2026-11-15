@@ -40,6 +40,16 @@ module Enumerable
 
     true
   end
+
+  def my_any?
+    return self.empty? ? false : true unless block_given?
+
+    (self.length - 1).times do |index|
+      return true if yield(self[index])
+    end
+
+    false
+  end
 end
 
 class Array
