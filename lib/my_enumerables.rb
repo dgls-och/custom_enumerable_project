@@ -2,7 +2,7 @@ module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       yield(self[index]) unless self.is_a?(Hash)
       yield(index, self[index]) if self.is_a?(Hash)
     end
@@ -13,7 +13,7 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       yield(self[index], index)
     end
 
@@ -24,7 +24,7 @@ module Enumerable
     return to_enum(:my_select) unless block_given?
 
     selected = []
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       selected << self[index] if yield(self[index])
     end
 
@@ -34,7 +34,7 @@ module Enumerable
   def my_all?
     return true unless block_given?
 
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       return false unless yield(self[index])
     end
 
@@ -44,7 +44,7 @@ module Enumerable
   def my_any?
     return self.empty? ? false : true unless block_given?
 
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       return true if yield(self[index])
     end
 
@@ -54,7 +54,7 @@ module Enumerable
   def my_none?
     return self.empty? ? true : false unless block_given?
 
-    (self.length - 1).times do |index|
+    self.size.times do |index|
       return false if yield(self[index])
     end
 
