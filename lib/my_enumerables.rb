@@ -83,14 +83,39 @@ module Enumerable
     mapped
   end
 
-  def my_inject(arg)
-    accumulator = arg
-    self.size.times do |i|
-      accumulator = yield(accumulator, self[i])
+  def my_inject(arg = nil)
+    unless block_given?
+      raise ArgumentError, 'no argument given (given 0, expected (1..2)' if arg.nil?
+      
+      unless arg.is_a?(String) || arg.is_a?(Symbol)
+        raise TypeError, 'argument is not an instance of string or symbol'
+      end
+      
+      if arg.is_a?(Symbol)
+        #full implementation missing
+        #for symbol to proc functionality
+        return "Info: missing implementation for #{arg.class} to proc"
+      end
+      
+      return nil
     end
+    
+    accumulator = arg.nil? ? self[0] : arg
+    
+    self.size.times do |i|
+      break if self[i + 1].nil? && arg.nil?
+      accumulator = yield(accumulator, self[i + 1]) if arg.nil?
+      accumulator = yield(accumulator, self[i]) if accumulator.is_a?(Integer) || accumulator.is_a?(Float)
+      accumulator = "#{yield(accumulator.to_i, self[i])}" if accumulator.is_a?(String) 
+      #missing a hash and array usecase
+    end
+    
     accumulator
   end
 end
 
 class Array
 end
+
+a = [ 1, 2, 3, 4 ]
+p a.my_inject('') { |acc, val| acc + val }
