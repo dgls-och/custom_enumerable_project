@@ -82,6 +82,14 @@ module Enumerable
 
     mapped
   end
+
+  def my_inject(arg)
+    accumulator = arg
+    self.size.times do |i|
+      accumulator = yield(accumulator, self[i])
+    end
+    accumulator
+  end
 end
 
 class Array
